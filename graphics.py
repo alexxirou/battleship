@@ -76,27 +76,27 @@ class Battleship(tk.Frame):
         x, y = self.strategy(b)
         shot = (x, y)
         while shot in oppmisses and len(lose) < 5 and len(win) < 5:
-                #print(shot)
-                oppmisses.append(shot)
+                print(shot)
+
                 x, y = self.strategy(b)
                 shot =(x,y)
                 """if the shot generated is in the list of the previous hits/misses, and the game win or lose condition is not met, a new shot will be generated."""
         res, ship = self.player_grid.shoot((x,y))
         if res == battleship.MISS:
             self.canvas1.create_oval(x * self.scale+1, y * self.scale+1, (x +1)* self.scale-1, (y +1) * self.scale-1, fill= 'blue')
-            shot=(x,y)
-            oppmisses.append(shot)
+
             """Adds previous shot to list"""
 
         else:
-            shot = (x, y)
-            oppmisses.append(shot)
             self.canvas1.create_oval(x * self.scale+1, y * self.scale+1, (x +1)* self.scale-1, (y +1) * self.scale-1, fill= 'yellow')
         if ship is not None:
             lose.append(ship.positions)
         if len(lose) >= 5:
             print("Game over. You lost...")
             """Lose condition."""
+
+        shot = (x, y)
+        oppmisses.append(shot)
         return
         """Breaks possible unwanted loops."""
 
@@ -134,30 +134,9 @@ class Battleship(tk.Frame):
 
 
 def random_shoot(blind_grid):
-    #print(lose)
-    destroyedships = []
-    check=[]
-    for set in lose:
-        for shippos in set:
-            destroyedships.append(shippos)
-    #print(destroyedships)
-
-    """create a list of destroyed ships coordinates so the ai won't shoot again at the same position"""
-
     #print(oppmisses)
-
     res = random.choice([i for i in range(0, blind_grid.sizex)]), random.choice([i for i in range(0, blind_grid.sizey)])
-    check.append(res)
-    while check[0] in destroyedships :
-
-        #print(check)
-        check =[]
-        check.append(res)
-        res = random.choice([i for i in range(0, blind_grid.sizex)]), random.choice(
-            [i for i in range(0, blind_grid.sizey)])
-        """Checks if generated coords are positions in the player's destroyed ships list. If yes it generates new x, y coords."""
-
     return res
-
+    """Generates random coordinates to be used for shots by AI."""
 
 Battleship(battleship.g, battleship.g2).mainloop()
