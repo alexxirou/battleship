@@ -35,7 +35,7 @@ def random_shippos_carrier():
         res = list(map(int, char))
         if reversevar == 0:
             res.reverse()
-        res = tuple(res)
+
         randomlist2.append(res)
 
     return randomlist2
@@ -44,7 +44,7 @@ def random_shippos_battleship():
     randomlist1 = []
     randomlist2 = []
     reversevar = random.randrange(0, 2)
-    while len(randomlist1) <= 5:
+    while len(randomlist1) < 4:
         randomlist1 = []
         random1 = random.choice([i for i in range(11, 99) if i not in [20,30,40,50,60,70,80,90]])
         rounded1 = int(math.ceil(random1 / 10.0)) * 10
@@ -60,7 +60,6 @@ def random_shippos_battleship():
         res = list(map(int, char))
         if reversevar == 0:
             res.reverse()
-        res = tuple(res)
         randomlist2.append(res)
     return randomlist2
 
@@ -88,7 +87,7 @@ def random_shippos_cruiser_or_sub():
         res = list(map(int, char))
         if reversevar == 0:
             res.reverse()
-        res = tuple(res)
+
         randomlist2.append(res)
 
     return randomlist2
@@ -119,7 +118,7 @@ def random_shippos_destroyer():
         res = list(map(int, char))
         if reversevar == 0:
             res.reverse()
-        res = tuple(res)
+
         randomlist2.append(res)
 
     return randomlist2
@@ -136,6 +135,11 @@ def create_grids(file):
             for t3 in list3:
                 for t4 in list4:
                     while t1 in list2 or t1 in list3 or t1 in list4 or t1 in list5 or t2 in list3 or t2 in list4 or t2 in list5 or t3 in list4 or t3 in list5 or t4 in list5:
+                        #print(list1)
+                        #print(list2)
+                        #print(list3)
+                        #print(list4)
+                        #print(list5)
                         list1 = random_shippos_carrier()
                         list2 = random_shippos_battleship()
                         list3 = random_shippos_cruiser_or_sub()
