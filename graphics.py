@@ -132,7 +132,7 @@ def random_shoot(blind_grid):
     res =0
     for ship in b.sunken_ships:
         sunkname.append(ship.name)
-    print(sunkname)
+    #print(sunkname)
     for tuple in b.hits:
         if ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) in b.hits  and (tuple[0] + 2, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 2 <= 10):
             res = int(tuple[0] + 2), int(tuple[1])
