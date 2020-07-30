@@ -37,12 +37,12 @@ class Battleship(tk.Frame):
         self.show_grid_opponent()
 
     def shoot(self, event):
-        opp=battleship.BlindGrid(self.opponent_grid)
+        opp = battleship.BlindGrid(self.opponent_grid)
         b = battleship.BlindGrid(self.player_grid)
         pointx = event.x // self.scale
         pointy = event.y // self.scale
         shot_before = any((pointx,pointy) in s.positions for s in self.opponent_grid.ships)
-        if len(win) < 5:
+        if len(opp.sunken_ships) < 5:
             res, ship = self.opponent_grid.shoot((pointx,pointy))
             """if the win condition has not be met the player will shoot."""
             if res == battleship.MISS and not shot_before:
@@ -127,9 +127,48 @@ class Battleship(tk.Frame):
 
 
 def random_shoot(blind_grid):
-    #b = battleship.BlindGrid(self.player_grid)
-    res = random.choice([i for i in range(0, blind_grid.sizex)]), random.choice([i for i in range(0, blind_grid.sizey)])
-    return res
+    sunkname = []
+    b = battleship.BlindGrid(battleship.g)
+    res =0
+    for ship in b.sunken_ships:
+        sunkname.append(ship.name)
+    print(sunkname)
+    for tuple in b.hits:
+        if ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) in b.hits  and (tuple[0] + 2, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 2 <= 10):
+            res = int(tuple[0] + 2), int(tuple[1])
+            return res
+            #print(res)
+        elif ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0] - 1, tuple[1]) in b.hits and (tuple[0] - 2, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] - 2 >= 0):
+            res = int(tuple[0] - 2), int(tuple[1])
+            #print(res)
+        elif ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) in b.hits and (tuple[0], tuple[1] + 2) not in b.misses.union(b.hits) and (tuple[1] + 2 <= 10):
+            res = int(tuple[0]), int(tuple[1] + 2)
+            return res
+            #print(res)
+        elif ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] - 1) in b.hits and (tuple[0], tuple[1] - 2) not in b.misses.union(b.hits) and (tuple[1] - 2 >= 0):
+            res = int(tuple[0]), int(tuple[1] - 2)
+            return res
+            #print(res)
+
+        elif (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 1 in range(0, 10)):
+            res = int(tuple[0] + 1), int(tuple[1])
+            return res
+                #print(res)
+        elif (tuple[0], tuple[1]) in b.hits and (tuple[0] - 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] -1 in range(0, 10)):
+            res = int(tuple[0] - 1), int(tuple[1])
+            return res
+            #print(res)
+        elif (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) not in b.misses.union(b.hits) and (tuple[1] + 1 in range(0, 10)):
+            res = int(tuple[0]), int(tuple[1] + 1)
+            return res
+             #print(res)
+        elif (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] - 1) not in b.misses.union(b.hits) and (tuple[1] - 1 in range(0, 10)):
+            res = int(tuple[0]), int(tuple[1] - 1)
+            return res
+            #print(res)
+        """Conditions for AI to shoot around a previous "hit" before shooting at random. """
+    res1= random.choice([i for i in range(0, blind_grid.sizex)]), random.choice([i for i in range(0, blind_grid.sizey)])
+    return res1
     """Generates random coordinates to be used for shots by AI."""
 
 Battleship(battleship.g, battleship.g2).mainloop()
