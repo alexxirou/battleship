@@ -128,10 +128,13 @@ class Battleship(tk.Frame):
 
 def random_shoot(blind_grid):
     sunkname = []
+    sunkpos = []
     b = battleship.BlindGrid(battleship.g)
     res =0
     for ship in b.sunken_ships:
         sunkname.append(ship.name)
+    for ship in b.sunken_ships:
+        sunkpos.append(ship.positions)
     #print(sunkname)
     for tuple in b.hits:
         if ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) in b.hits  and (tuple[0] + 2, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 2 <= 10):
@@ -141,7 +144,7 @@ def random_shoot(blind_grid):
         elif ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0] - 1, tuple[1]) in b.hits and (tuple[0] - 2, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] - 2 >= 0):
             res = int(tuple[0] - 2), int(tuple[1])
             #print(res)
-        elif ("Carrier", "Battleship") not in sunkname and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) in b.hits and (tuple[0], tuple[1] + 2) not in b.misses.union(b.hits) and (tuple[1] + 2 <= 10):
+        elif ("Carrier", "Battleship") not in sunkname  and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) in b.hits and (tuple[0], tuple[1] + 2) not in b.misses.union(b.hits) and (tuple[1] + 2 <= 10):
             res = int(tuple[0]), int(tuple[1] + 2)
             return res
             #print(res)
@@ -150,19 +153,19 @@ def random_shoot(blind_grid):
             return res
             #print(res)
 
-        elif (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 1 in range(0, 10)):
+        elif tuple not in sunkpos and (tuple[0], tuple[1]) in b.hits and (tuple[0] + 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] + 1 in range(0, 10)):
             res = int(tuple[0] + 1), int(tuple[1])
             return res
                 #print(res)
-        elif (tuple[0], tuple[1]) in b.hits and (tuple[0] - 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] -1 in range(0, 10)):
+        elif tuple not in sunkpos and (tuple[0], tuple[1]) in b.hits and (tuple[0] - 1, tuple[1]) not in b.misses.union(b.hits) and (tuple[0] -1 in range(0, 10)):
             res = int(tuple[0] - 1), int(tuple[1])
             return res
             #print(res)
-        elif (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) not in b.misses.union(b.hits) and (tuple[1] + 1 in range(0, 10)):
+        elif tuple not in sunkpos and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] + 1) not in b.misses.union(b.hits) and (tuple[1] + 1 in range(0, 10)):
             res = int(tuple[0]), int(tuple[1] + 1)
             return res
              #print(res)
-        elif (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] - 1) not in b.misses.union(b.hits) and (tuple[1] - 1 in range(0, 10)):
+        elif tuple not in sunkpos and (tuple[0], tuple[1]) in b.hits and (tuple[0], tuple[1] - 1) not in b.misses.union(b.hits) and (tuple[1] - 1 in range(0, 10)):
             res = int(tuple[0]), int(tuple[1] - 1)
             return res
             #print(res)

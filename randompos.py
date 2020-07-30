@@ -3,8 +3,8 @@ import os
 import random
 
 dirname = os.path.dirname(__file__)
-filename1 = os.path.join( dirname, 'grids/grid1.grd')
-filename2 = os.path.join( dirname, 'grids/grid2.grd')
+filename1 = os.path.join( dirname, 'grid1.grd')
+filename2 = os.path.join( dirname, 'grid2.grd')
 
 
 
