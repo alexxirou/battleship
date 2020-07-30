@@ -135,17 +135,18 @@ def create_grids(file):
             for t3 in list3:
                 for t4 in list4:
                     while t1 in list2 or t1 in list3 or t1 in list4 or t1 in list5 or t2 in list3 or t2 in list4 or t2 in list5 or t3 in list4 or t3 in list5 or t4 in list5:
-                        #print(list1)
-                        #print(list2)
-                        #print(list3)
-                        #print(list4)
-                        #print(list5)
+                        # print(list1)
+                        # print(list2)
+                        # print(list3)
+                        # print(list4)
+                        # print(list5)
                         list1 = random_shippos_carrier()
                         list2 = random_shippos_battleship()
                         list3 = random_shippos_cruiser_or_sub()
                         list4 = random_shippos_cruiser_or_sub()
                         list5 = random_shippos_destroyer()
                         """Nested loop to check that the lists used for coord do not intersect."""
+        
 
     Lines= ["10:10 \n"
     "Carrier " +str(list1[0][0])+":"+str(list1[0][1])+" "+str(list1[1][0])+":"+str(list1[1][1])+" "+str(list1[2][0])+":"+str(list1[2][1])+" "+str(list1[3][0])+":"+str(list1[3][1])+" "+str(list1[4][0])+":"+str(list1[4][1]),"\n"

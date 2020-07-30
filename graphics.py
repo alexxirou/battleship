@@ -6,12 +6,8 @@ import battleship
 battleship.MISS = 'MISS'
 battleship.HIT = 'HIT'
 battleship.DESTROYED = 'DESTROYED'
-win = []
-"""List where opponent's destroyed ships are stored."""
-lose = []
-"""List where player's destroyed ships are stored."""
-oppmisses =[]
-"""list where opponent's previous hits will be stored."""
+
+
 
 
 class Battleship(tk.Frame):
@@ -41,7 +37,8 @@ class Battleship(tk.Frame):
         self.show_grid_opponent()
 
     def shoot(self, event):
-
+        opp=battleship.BlindGrid(self.opponent_grid)
+        b = battleship.BlindGrid(self.player_grid)
         pointx = event.x // self.scale
         pointy = event.y // self.scale
         shot_before = any((pointx,pointy) in s.positions for s in self.opponent_grid.ships)
@@ -49,7 +46,6 @@ class Battleship(tk.Frame):
             res, ship = self.opponent_grid.shoot((pointx,pointy))
             """if the win condition has not be met the player will shoot."""
             if res == battleship.MISS and not shot_before:
-
                 self.canvas2.create_oval(pointx * self.scale+1, pointy * self.scale+1, (pointx +1)* self.scale-1, (pointy +1) * self.scale-1, fill= 'blue')
             elif res != battleship.MISS:
                 if res == battleship.HIT:
@@ -57,11 +53,10 @@ class Battleship(tk.Frame):
                 self.canvas2.create_oval(pointx * self.scale+1, pointy * self.scale+1, (pointx +1)* self.scale-1, (pointy +1) * self.scale-1, fill= 'red')
             if ship is not None:
                 print(ship.name, res+"!!!" )
-                win.append(ship.positions)
                 self.show_sunk(ship)
             self.let_opponent_shoot()
 
-        if len(win) >= 5 and len(lose) < 5 :
+        if len(opp.sunken_ships) >= 5 and len(b.sunken_ships) < 5 :
             print("Game over! You win!")
             """Win condition if all of the opponent's ships are in the list and not all of the player's ships are not on the lose list. """
 
@@ -70,13 +65,16 @@ class Battleship(tk.Frame):
 
 
     def let_opponent_shoot(self):
-
+        opp = battleship.BlindGrid(self.opponent_grid)
         b = battleship.BlindGrid(self.player_grid)
-        #print(b.misses.union(b.hits))
         x, y = self.strategy(b)
         shot = (x, y)
-        while shot in oppmisses and len(lose) < 5 and len(win) < 5:
-                print(shot)
+        if len(b.sunken_ships) >= 5 and len(opp.sunken_ships) < 5:
+            print("Game over. You lost...")
+            """Lose condition."""
+            return
+        while shot in b.misses.union(b.hits) and len(b.sunken_ships) < 5 and len(opp.sunken_ships) < 5:
+                #print(shot)
 
                 x, y = self.strategy(b)
                 shot =(x,y)
@@ -84,20 +82,15 @@ class Battleship(tk.Frame):
         res, ship = self.player_grid.shoot((x,y))
         if res == battleship.MISS:
             self.canvas1.create_oval(x * self.scale+1, y * self.scale+1, (x +1)* self.scale-1, (y +1) * self.scale-1, fill= 'blue')
-
+            #print(b.misses)
             """Adds previous shot to list"""
 
         else:
             self.canvas1.create_oval(x * self.scale+1, y * self.scale+1, (x +1)* self.scale-1, (y +1) * self.scale-1, fill= 'yellow')
-        if ship is not None:
-            lose.append(ship.positions)
-        if len(lose) >= 5:
-            print("Game over. You lost...")
-            """Lose condition."""
 
-        shot = (x, y)
-        oppmisses.append(shot)
+            #print(b.hits)
         return
+
         """Breaks possible unwanted loops."""
 
 
@@ -134,7 +127,7 @@ class Battleship(tk.Frame):
 
 
 def random_shoot(blind_grid):
-    #print(oppmisses)
+    #b = battleship.BlindGrid(self.player_grid)
     res = random.choice([i for i in range(0, blind_grid.sizex)]), random.choice([i for i in range(0, blind_grid.sizey)])
     return res
     """Generates random coordinates to be used for shots by AI."""

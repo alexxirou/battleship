@@ -29,15 +29,17 @@ class Ship:
         """Check if the shot hits the ship. If so, remember the hit.
             Returns one of 'MISS', 'HIT', or 'DESTROYED'.
             """
-        if shot not in self.hits:
+        if shot in self.hits:
+            res = "MISS"
+        elif shot not in self.hits:
             self.hits.add(shot)
             if not self.is_afloat():
-                return "DESTROYED"
+                res = "DESTROYED"
             else:
-                return "HIT"
+                res = "HIT"
         else:
-            return "MISS"
-
+            res = "MISS"
+        return res
 
 
 
@@ -59,12 +61,10 @@ class Grid:
         return self.ships
 
     def shoot(self, shot):
-        result = ("MISS", None)
-
+        result = 0
         if shot not in self.misses:
             for ship in self.ships:
                 if shot in ship.positions:
-
                     r = ship.shoot_at_ship(shot)
                     if r == "MISS":
                         self.misses.add(shot)
@@ -73,11 +73,11 @@ class Grid:
                         result= ("HIT", None)
                     if r == "DESTROYED":
                         result = ("DESTROYED", ship)
-
+        if result != 0:
+            return result
         else:
-            result = ("MISS", None)
-        return result
-
+            self.misses.add(shot)
+            return ("MISS", None)
 
 class BlindGrid:
     """Encodes the opponent's view of the grid."""
