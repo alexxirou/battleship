@@ -42,7 +42,7 @@ class Battleship(tk.Frame):
         pointx = event.x // self.scale
         pointy = event.y // self.scale
         shot_before = any((pointx,pointy) in s.positions for s in self.opponent_grid.ships)
-        if len(opp.sunken_ships) < 5:
+        if len(opp.sunken_ships) < 5 and len(b.sunken_ships) < 5:
             res, ship = self.opponent_grid.shoot((pointx,pointy))
             """if the win condition has not be met the player will shoot."""
             if res == battleship.MISS and not shot_before:
@@ -56,10 +56,11 @@ class Battleship(tk.Frame):
                 self.show_sunk(ship)
             self.let_opponent_shoot()
 
-        if len(opp.sunken_ships) >= 5 and len(b.sunken_ships) < 5 :
+        elif len(opp.sunken_ships) >= 5 and len(b.sunken_ships) < 5 :
             print("Game over! You win!")
             """Win condition if all of the opponent's ships are in the list and not all of the player's ships are not on the lose list. """
-
+        else:
+            self.let_opponent_shoot()
 
 
 
