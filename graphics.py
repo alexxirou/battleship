@@ -74,6 +74,11 @@ class Battleship(tk.Frame):
             print("Game over. You lost...")
             """Lose condition."""
             return
+
+        elif len(opp.sunken_ships) >= 5 and len(b.sunken_ships) < 5 :
+            print("Game over! You win!")
+            """Win condition if all of the opponent's ships are in the list and not all of the player's ships are not on the lose list. """
+            return
         while shot in b.misses.union(b.hits) and len(b.sunken_ships) < 5 and len(opp.sunken_ships) < 5:
                 #print(shot)
 
