@@ -79,7 +79,7 @@ class Grid:
             self.misses.add(shot)
             return ("MISS", None)
 
-class BlindGrid:
+class BlindGrid(Grid):
     """Encodes the opponent's view of the grid."""
 
     def __init__(self, Grid):
