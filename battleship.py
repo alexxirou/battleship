@@ -48,12 +48,14 @@ class Grid:
     shots that have been fired so far and if they were hits.
     """
 
-    def __init__(self, sizex, sizey):
+    def __init__(self, sizex, sizey, ships=None, misses=None):
         """Initializes a board of the given size."""
         self.sizex = sizex
         self.sizey = sizey
-        self.ships = []
-        self.misses = set()
+        if ships == None:
+            self.ships = []
+        if misses == None:
+            self.misses = set()
 
     def add_ship(self, ship):
         """Add a Ship to the grid."""
