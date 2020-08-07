@@ -1,0 +1,2 @@
+virtualenv==20.0.28
+PyInstaller==3.6
