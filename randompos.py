@@ -9,13 +9,13 @@ filename2 = os.path.join( dirname, 'grid2.grd')
 
 
 
-def random_shippos_carrier():
+def random_shippos(lengthoflist,n):
     randomlist1 = []
     randomlist2 = []
-    reversevar = random.randrange(0, 2)
+    reversevar = random.randrange(0, n)
     """Generate a random var to decide if ship will be vertically or horizontally placed."""
 
-    while len(randomlist1) <= 5:
+    while len(randomlist1) <= lengthoflist:
         """This loop will repeat if the length of the generated random list is too long or too short."""
         randomlist1 = []
         """Emptying list between loops"""
@@ -40,95 +40,13 @@ def random_shippos_carrier():
 
     return randomlist2
 
-def random_shippos_battleship():
-    randomlist1 = []
-    randomlist2 = []
-    reversevar = random.randrange(0, 2)
-    while len(randomlist1) < 4:
-        randomlist1 = []
-        random1 = random.choice([i for i in range(11, 99) if i not in [20,30,40,50,60,70,80,90]])
-        rounded1 = int(math.ceil(random1 / 10.0)) * 10
-        if random1 > rounded1:
-            for x in range(rounded1+1, random1, 1):
-                randomlist1.append(str(x))
-        elif random1 < rounded1:
-            for x in range(random1, rounded1-1, 1):
-                randomlist1.append(str(x))
-    for char in randomlist1:
-        """Breaking the list interger into single digits chars to be used for x and y coords."""
-
-        res = list(map(int, char))
-        if reversevar == 0:
-            res.reverse()
-        randomlist2.append(res)
-    return randomlist2
-
-
-def random_shippos_cruiser_or_sub():
-    randomlist1 = []
-    randomlist2 = []
-    reversevar = random.randrange(0, 2)
-
-
-    while len(randomlist1) <= 4:
-        randomlist1 = []
-        random1 = random.choice([i for i in range(11, 99) if i not in [20, 30, 40, 50, 60, 70, 80, 90]])
-        rounded1 = int(math.ceil(random1 / 10.0)) * 10
-
-        if random1 > rounded1:
-            for x in range(rounded1 + 1, random1, 1):
-                randomlist1.append(str(x))
-        elif random1 < rounded1:
-            for x in range(random1, rounded1 - 1, 1):
-                randomlist1.append(str(x))
-    for char in randomlist1:
-        """Breaking the list interger into single digits chars to be used for x and y coords."""
-
-        res = list(map(int, char))
-        if reversevar == 0:
-            res.reverse()
-
-        randomlist2.append(res)
-
-    return randomlist2
-
-
-
-def random_shippos_destroyer():
-    randomlist1 = []
-    randomlist2 = []
-
-    reversevar = random.randrange(0, 2)
-
-    while len(randomlist1) <= 3:
-        randomlist1 = []
-        random1 = random.choice([i for i in range(11, 99) if i not in [20, 30, 40, 50, 60, 70, 80, 90]])
-        rounded1 = int(math.ceil(random1 / 10.0)) * 10
-
-        if random1 > rounded1:
-            for x in range(rounded1 + 1, random1, 1):
-                randomlist1.append(str(x))
-        elif random1 < rounded1:
-            for x in range(random1, rounded1 - 1, 1):
-                randomlist1.append(str(x))
-
-    for char in randomlist1:
-        """Breaking the list interger into single digits to be used for x and y coords."""
-
-        res = list(map(int, char))
-        if reversevar == 0:
-            res.reverse()
-
-        randomlist2.append(res)
-
-    return randomlist2
 
 def create_grids(file):
-    list1 = random_shippos_carrier()
-    list2 = random_shippos_battleship()
-    list3 = random_shippos_cruiser_or_sub()
-    list4 = random_shippos_cruiser_or_sub()
-    list5 = random_shippos_destroyer()
+    list1 = random_shippos(5,2)
+    list2 = random_shippos(4,2)
+    list3 = random_shippos(3,2)
+    list4 = random_shippos(3,2)
+    list5 = random_shippos(3,2)
 
     for t1 in list1:
         for t2 in list2:
