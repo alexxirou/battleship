@@ -90,8 +90,8 @@ def create_grids(file):
     with open(file, 'w') as f:
         f.writelines(Lines)
 
-    with open(file,'r') as f:
-        print(f.read())
+    #with open(file,'r') as f: #debug
+     #   print(f.read())
 
 
 
