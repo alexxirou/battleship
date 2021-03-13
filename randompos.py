@@ -50,20 +50,34 @@ def create_grids(file):
 
     for t1 in list1:
         for t2 in list2:
+            while t1 in list2:
+                #print("list1",list1)
+                #print("lis2",list2)
+                list2 = random_shippos(4,2)
+
+    for t1 in list1:
+        for t2 in list2:
+            for t3 in list3:
+                while t1 in list3 or t2 in list3:
+                    #print("list3",list3)
+                    list3 = random_shippos(3,2)         
+    
+    for t1 in list1:
+        for t2 in list2:
             for t3 in list3:
                 for t4 in list4:
-                    while t1 in list2 or t1 in list3 or t1 in list4 or t1 in list5 or t2 in list3 or t2 in list4 or t2 in list5 or t3 in list4 or t3 in list5 or t4 in list5:
-                        # print(list1)
-                        # print(list2)
-                        # print(list3)
-                        # print(list4)
-                        # print(list5)
-                        list1 = random_shippos(5,2)
-                        list2 = random_shippos(4,2)
-                        list3 = random_shippos(3,2)
-                        list4 = random_shippos(3,2)
-                        list5 = random_shippos(3,2)
-                        """Nested loop to check that the lists used for coord do not intersect."""
+                    while t1 in list4 or t2 in list4 or t3 in list4:
+                        #print("list4",list4)
+                        list4 = random_shippos(3,2)   
+
+    for t1 in list1:
+        for t2 in list2:
+            for t3 in list3:
+                for t4 in list4:
+                    for t5 in list5:
+                        while t1 in list5 or t2 in list5 or t3 in list5 or t4 in list5:
+                            #print("list5", list5)
+                            list5 = random_shippos(3,2)   
 
 
     Lines= ["10:10 \n"
@@ -76,8 +90,8 @@ def create_grids(file):
     with open(file, 'w') as f:
         f.writelines(Lines)
 
-    #with open(file,'r') as f:
-        #print(f.read())
+    with open(file,'r') as f:
+        print(f.read())
 
 
 
